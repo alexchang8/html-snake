@@ -40,7 +40,7 @@ class Board {
         this.tail = this.head;
         this.draw(y, x);
         this.makeFood();
-        this.lastOrientation = "UP";
+        this.lastOrientation = RIGHT;
         this.length = 1;
         this.hasFood = false;
     }
@@ -112,8 +112,8 @@ class Board {
         var newOrientation;
         if(this.head.y !=0 && this.head.x != this.COLS - 1){
             //zig zag upwards
-            
-            if((this.head.x == 0 || this.head.x == this.COLS - 2) && this.lastOrientation != UP && this.lastOrientation != DOWN){
+            //console.log(this.head.x, this.head.y, this.lastOrientation);
+            if((this.head.x == 0 || this.head.x == this.COLS - 2) && this.lastOrientation != UP && this.lastOrientation != DOWN && !(this.head.x == this.COLS-2 && this.head.y == this.ROWS - 1)){
                 newOrientation = UP;
             }
             else if( this.lastOrientation == UP || this.lastOrientation == DOWN){
@@ -122,7 +122,10 @@ class Board {
             else newOrientation = this.lastOrientation;  
         }
         else if (this.head.y == 0) {
-            newOrientation = RIGHT;
+            newOrientation = this.head.x == COLS - 1 ? DOWN : RIGHT;
+        }
+        else{
+            newOrientation = this.head.y == ROWS - 1 ? LEFT : DOWN;
         }
             //newOrientatio n = this.head.x == this.COLS - 1 ? DOWN : RIGHT
         board.update(newOrientation);
@@ -151,8 +154,8 @@ function mainLoop(timestamp) {
         return;
     }
     lastFrameTimeMS = timestamp;
-    board.update(key);
-    //board.auto()
+    //board.update(key);
+    board.auto()
     requestAnimationFrame(mainLoop);
 }
 
