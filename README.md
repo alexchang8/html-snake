@@ -1,5 +1,5 @@
 # html-snake
-A simple html snake game
+A simple snake game written in js
 
 Slow:
 https://alexchang8.github.io/html-snake/snake.html
